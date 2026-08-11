@@ -71,7 +71,6 @@ const globalStyle = `
     .campaign-btn { padding: 12px 32px !important; font-size: 13px !important; width: auto !important; }
     .services-title, .docs-title, .why-title { font-size: 22px !important; white-space: nowrap !important; }
     .svc-grid1 { grid-template-columns: repeat(2,1fr) !important; gap: 12px !important; }
-    .svc-grid2 { grid-template-columns: repeat(2,1fr) !important; max-width: 100% !important; gap: 12px !important; margin: 0 !important; }
     .docs-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
     .feat-item { grid-template-columns: 1fr !important; }
     .feat-item .feat-img { min-height: 200px !important; order: 0 !important; }
@@ -533,14 +532,9 @@ function Services() {
     <section id="services" style={{ background: "var(--white)", padding: "144px 0" }}>
       <div className="inner">
         <SectionHeader en="SERVICES" title="事業内容" titleClass="services-title" />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20, marginBottom: 20 }} className="svc-grid1">
-          {services.slice(0, 3).map((s, i) => (
-            <Reveal key={s.name} delay={i * 100}><ServiceCard {...s} /></Reveal>
-          ))}
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }} className="svc-grid2">
-          {services.slice(3).map((s, i) => (
-            <Reveal key={s.name} delay={i * 100}><ServiceCard {...s} /></Reveal>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }} className="svc-grid1">
+          {services.map((s, i) => (
+            <Reveal key={s.name} delay={i * 80}><ServiceCard {...s} /></Reveal>
           ))}
         </div>
       </div>
