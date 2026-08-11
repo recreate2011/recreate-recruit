@@ -69,8 +69,9 @@ const globalStyle = `
     .campaign-body { font-size: 11px !important; }
     .campaign-note { font-size: 9px !important; }
     .campaign-btn { padding: 12px 32px !important; font-size: 13px !important; width: auto !important; }
-    .svc-grid1 { grid-template-columns: 1fr !important; gap: 12px !important; }
-    .svc-grid2 { grid-template-columns: 1fr !important; max-width: 100% !important; gap: 12px !important; margin: 0 !important; }
+    .services-title, .docs-title, .why-title { font-size: 22px !important; white-space: nowrap !important; }
+    .svc-grid1 { grid-template-columns: repeat(2,1fr) !important; gap: 12px !important; }
+    .svc-grid2 { grid-template-columns: repeat(2,1fr) !important; max-width: 100% !important; gap: 12px !important; margin: 0 !important; }
     .docs-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
     .feat-item { grid-template-columns: 1fr !important; }
     .feat-item .feat-img { min-height: 200px !important; order: 0 !important; }
@@ -531,7 +532,7 @@ function Services() {
   return (
     <section id="services" style={{ background: "var(--white)", padding: "144px 0" }}>
       <div className="inner">
-        <SectionHeader en="SERVICES" title="事業内容" />
+        <SectionHeader en="SERVICES" title="事業内容" titleClass="services-title" />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20, marginBottom: 20 }} className="svc-grid1">
           {services.slice(0, 3).map((s, i) => (
             <Reveal key={s.name} delay={i * 100}><ServiceCard {...s} /></Reveal>
@@ -565,7 +566,7 @@ function Docs() {
   return (
     <section style={{ background: "var(--warm)", padding: "120px 0" }}>
       <div className="inner">
-        <SectionHeader en="DOCUMENTS" title="会社資料" />
+        <SectionHeader en="DOCUMENTS" title="会社資料" titleClass="docs-title" />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12 }} className="docs-grid">
           {docs.map((d, i) => (
             <Reveal key={d} delay={i * 60}>
@@ -614,7 +615,7 @@ function Features() {
         }
       `}</style>
       <div className="inner">
-        <SectionHeader en="WHY RECREATE" title="リクリエイトで働く理由" />
+        <SectionHeader en="WHY RECREATE" title="リクリエイトで働く理由" titleClass="why-title" />
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
            {features.map((f, i) => (
             <Reveal key={f.en} direction={i % 2 === 0 ? "right" : "left"}>
@@ -682,32 +683,94 @@ function Schedule() {
 const voices = [
   { name: "田中 さくら", role: "介護職 / 入社3年目", img: "/images/スタッフの声(赤).jpg", text: "未経験でも丁寧に教えてもらえました。今では資格も取得して、自分の成長を実感しています。" },
   { name: "鈴木 健太", role: "訪問看護師 / 入社5年目", img: "/images/スタッフの声(青).jpg", text: "チームの雰囲気がとても良く、困ったときは必ず誰かが助けてくれます。働きやすい職場です。" },
-  { name: "Kさん", role: "訪問看護師 / 主任", img: "/images/interview-nurce.jpg", text: "「いつも楽しみにしていたよ」ご利用者さまからいただいたこの言葉が、今も忘れられません。" },
+  {
+    name: "Kさん",
+    role: "訪問看護師 / 主任",
+    img: "/images/interview-nurce.jpg",
+    text: "「いつも楽しみにしていたよ」ご利用者さまからいただいたこの言葉が、今も忘れられません。",
+    interview: {
+      profile: "経験年数15年目 ／ 入職6年目 ／ 職種：看護師",
+      qa: [
+        { q: "この仕事を選んだきっかけや理由は何でしたか？", a: "私が幼い頃から父が病気を患っており、母が看護師さんに感謝してると幼い頃からよく聞いていたので、自然と看護師の仕事に興味を持つ様になりました。" },
+        { q: "リクリエイトに入職した決め手はなにでしたか？また入職の前と後で感じたギャップはなにかありますか？", a: "ホームページの写真で、職員同士がワイワイ楽しそうだった事と、利用者様に寄り添った会社で素敵だなと思ったからです。実際社長さんはいつも活き活きされていて面白いです！\n大変だなと思ったことは、真夏・真冬の移動が過酷な事。暑さ日焼け対策、防寒対策バッチリです！" },
+        { q: "この職場で働いて「よかった」と感じる瞬間はなにかありますか？", a: "1番は訪問看護という仕事にやりがいを感じられる事です。私は利用者、ご家族様との会話を大事にしていて、そこからさらに良いサービスに繋げられないかを意識して関わっています。\nうちは柔軟性があるステーションなので所長に相談しながら、利用者様がやってほしい事、やりたい事を一緒に叶えやすいかなと思います。\n最近は、長年日本舞踊の先生をされてた利用者さんと、リハビリとして日本舞踊を教えていただいたりして、その方その方との関わりを考えるのが楽しいです。" },
+        { q: "仕事で大変なことと、またどのように克服したのか教えてください", a: "訪問看護は基本1人での訪問なので、イレギュラーな事があった時判断に迷うことがあります。そんな時、すぐに相談に乗ってくれる上司、仲間がいるので心強いです。\nまた毎朝申し送りがあるので、自分の担当以外の利用者様の情報も共有できるので、オンコールの不安も軽減されています。相談をしやすい環境は整っていると思います。いつも周りに助けてもらっています！" },
+        { q: "この仕事をしていて印象に残っているエピソードについて教えてください", a: "元々ご主人様に訪問看護介入しており、ご主人様をご自宅でお看取りした利用者様。\n仲のいいご夫婦で、それまでご主人様のために趣味の料理やお菓子作りをされていたけど、お一人になり何も作る気にならないと元気がなくなっていました。その奥さまが病気になり、訪問看護として介入始めた際、一緒にシフォンケーキを作らせてもらった事がありました。\nその方を最期お看取りする時「あなたに来てもらえて良かった。いつも来てくれるのを楽しみにしていたよ」と言ってもらえたのが嬉しかったです。" },
+        { q: "どんな人と一緒に働きたいですか？", a: "冗談を言ったり、小さいことでも報告し合える様な関係性を作り、お互い切磋琢磨しながら楽しく働きたいです！私もまだまだ未熟なので、高め合えたらいいなと思います。" },
+      ],
+    },
+  },
 ];
 
 function Voices() {
+  const [activeVoice, setActiveVoice] = useState(null);
   return (
     <section id="voices" style={{ background: "var(--warm)", padding: "144px 0" }}>
       <div className="inner">
         <SectionHeader en="STAFF VOICES" title="先輩の声" />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }} className="voices-grid">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 28 }} className="voices-grid">
           {voices.map((v, i) => (
             <Reveal key={v.name} delay={i * 120}>
-              <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--border)", background: "var(--white)" }}>
+              <div
+                onClick={v.interview ? () => setActiveVoice(v) : undefined}
+                style={{ borderRadius: 10, overflow: "hidden", border: "1px solid var(--border)", background: "var(--white)", maxWidth: 220, margin: "0 auto", cursor: v.interview ? "pointer" : "default" }}
+              >
                 <div style={{ aspectRatio: "4/3", overflow: "hidden" }}>
                   <img src={v.img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={v.name} />
                 </div>
-                <div style={{ padding: 24 }}>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", marginBottom: 2, textAlign: "center" }}>{v.name}</p>
-                  <p style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 14, textAlign: "center" }}>{v.role}</p>
-                  <p style={{ fontSize: 13, color: "var(--text-light)", lineHeight: 1.9 }}>{v.text}</p>
+                <div style={{ padding: 16 }}>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", marginBottom: 2, textAlign: "center" }}>{v.name}</p>
+                  <p style={{ fontSize: 10, color: "var(--text-muted)", marginBottom: 10, textAlign: "center" }}>{v.role}</p>
+                  <p style={{ fontSize: 12, color: "var(--text-light)", lineHeight: 1.8 }}>{v.text}</p>
+                  {v.interview && <p style={{ fontSize: 11, color: "var(--blue)", fontWeight: 700, textAlign: "center", marginTop: 10 }}>全文を読む →</p>}
                 </div>
               </div>
             </Reveal>
           ))}
         </div>
       </div>
+      {activeVoice && <VoiceModal voice={activeVoice} onClose={() => setActiveVoice(null)} />}
     </section>
+  );
+}
+
+function VoiceModal({ voice, onClose }) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    <div className="job-modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="job-modal" role="dialog" aria-modal="true" aria-label={voice.name}>
+        <div className="modal-drag-bar" />
+        <div style={{ background: "var(--blue)", padding: "24px 28px 20px", display: "flex", gap: 16, alignItems: "center" }}>
+          <img src={voice.img} alt={voice.name} style={{ width: 56, height: 56, borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "2px solid rgba(255,255,255,0.6)" }} />
+          <div style={{ flex: 1 }}>
+            <h2 style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 19, fontWeight: 700, color: "#fff", margin: "0 0 4px" }}>{voice.name}</h2>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.85)", margin: 0 }}>{voice.role}</p>
+          </div>
+          <button onClick={onClose} aria-label="閉じる" style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", color: "#fff", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>✕</button>
+        </div>
+        <div className="modal-section" style={{ paddingTop: 20 }}>
+          {voice.interview.profile && (
+            <p style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid var(--border)" }}>{voice.interview.profile}</p>
+          )}
+          {voice.interview.qa.map((item, i) => (
+            <div key={i} style={{ marginBottom: 24 }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: "var(--blue)", marginBottom: 8, lineHeight: 1.6 }}>Q{i + 1}. {item.q}</p>
+              <p style={{ fontSize: 13, color: "var(--text)", lineHeight: 1.9, whiteSpace: "pre-line" }}>{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -722,17 +785,17 @@ function Welfare() {
     <section style={{ background: "var(--white)", padding: "144px 0" }}>
       <div className="inner">
         <SectionHeader en="WELFARE" title="福利厚生" />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }} className="welfare-grid">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 28 }} className="welfare-grid">
           {welfare.map((w, i) => (
             <Reveal key={w.title} delay={i * 120}>
-              <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--border)" }}>
+              <div style={{ borderRadius: 10, overflow: "hidden", maxWidth: 220, margin: "0 auto" }}>
                 <div style={{ position: "relative", aspectRatio: "4/3" }}>
                   <div style={{ width: "100%", height: "100%", overflow: "hidden" }}>
                     <img src={w.img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={w.title} />
                   </div>
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(83,70,89,0.72) 0%,rgba(83,70,89,0.08) 60%,transparent 100%)", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: 22 }}>
-                    <span style={{ display: "inline-block", background: "var(--accent)", color: "var(--text)", fontSize: 11, fontWeight: 700, padding: "2px 10px", borderRadius: 3, marginBottom: 7, alignSelf: "flex-start" }}>{w.badge}</span>
-                    <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 17, fontWeight: 700, color: "var(--white)", lineHeight: 1.4 }}>{w.title}</p>
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(83,70,89,0.72) 0%,rgba(83,70,89,0.08) 60%,transparent 100%)", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: 16 }}>
+                    <span style={{ display: "inline-block", background: "var(--accent)", color: "var(--text)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, marginBottom: 6, alignSelf: "flex-start" }}>{w.badge}</span>
+                    <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 15, fontWeight: 700, color: "var(--white)", lineHeight: 1.4 }}>{w.title}</p>
                   </div>
                 </div>
               </div>
@@ -747,8 +810,10 @@ function Welfare() {
 const numbers = [
   { val: "2013", unit: "年", label: "設立", icon: "/images/企業設立.png" },
   { val: "約70", unit: "名", label: "スタッフ数", icon: "/images/社員数.png" },
-  { val: "43", unit: "歳", label: "平均年齢", icon: "/images/年齢.png" },
-  { val: "5:5", unit: "", label: "男女比", icon: "/images/男女比.png" },
+  { val: "47.2", unit: "歳", label: "平均年齢", icon: "/images/年齢.png" },
+  { val: "67:33", unit: "", label: "男女比", icon: "/images/男女比.png" },
+  { val: "36", unit: "万円", label: "平均給与", icon: "" },
+  { val: "10", unit: "時間", label: "月平均労働時間", icon: "" },
 ];
 
 function Numbers() {
@@ -762,14 +827,16 @@ function Numbers() {
             <div style={{ width: 32, height: 2, background: "var(--accent)", margin: "0 auto" }} />
           </Reveal>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 20 }} className="num-grid">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }} className="num-grid">
           {numbers.map((n, i) => (
             <Reveal key={n.label} delay={i * 100}>
               <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: 12, padding: "36px 20px 32px", textAlign: "center", border: "1px solid rgba(255,255,255,0.15)" }}>
-                <div className="num-icon" style={{ width: 72, height: 72, margin: "0 auto 20px" }}>
-                  <img src={n.icon} style={{ width: "100%", height: "100%", objectFit: "contain" }} alt="" />
-                </div>
-                <div className="num-val" style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 42, fontWeight: 600, color: "var(--white)", lineHeight: 1, marginBottom: 8 }}>
+                {n.icon && (
+                  <div className="num-icon" style={{ width: 72, height: 72, margin: "0 auto 20px" }}>
+                    <img src={n.icon} style={{ width: "100%", height: "100%", objectFit: "contain" }} alt="" />
+                  </div>
+                )}
+                <div className="num-val" style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 42, fontWeight: 600, color: "var(--white)", lineHeight: 1, marginBottom: 8, marginTop: n.icon ? 0 : 20 }}>
                   {n.val}<span style={{ fontSize: 17, fontWeight: 400 }}>{n.unit}</span>
                 </div>
                 <div className="num-label" style={{ fontSize: 12, color: "rgba(255,255,255,0.65)", letterSpacing: "0.08em" }}>{n.label}</div>
@@ -862,16 +929,16 @@ function Flow() {
     <section style={{ background: "var(--warm)", padding: "144px 0" }}>
       <div className="inner">
         <SectionHeader en="HIRING PROCESS" title="採用までの流れ" titleClass="flow-title" />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16 }} className="flow-steps">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 20 }} className="flow-steps">
           {flowSteps.map((s, i) => (
             <Reveal key={s.n} delay={i * 100}>
-              <div style={{ background: "var(--white)", border: "1px solid var(--border)", borderRadius: 12, padding: "36px 24px 32px", textAlign: "center" }}>
-                <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 32, fontWeight: 600, color: "#c8c8c8", lineHeight: 1, marginBottom: 16 }}>{s.n}</p>
-                <div style={{ width: 64, height: 64, margin: "0 auto 16px" }}>
+              <div style={{ background: "var(--white)", border: "1px solid var(--border)", borderRadius: 10, padding: "26px 18px 24px", textAlign: "center" }}>
+                <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 26, fontWeight: 600, color: "#c8c8c8", lineHeight: 1, marginBottom: 12 }}>{s.n}</p>
+                <div style={{ width: 48, height: 48, margin: "0 auto 12px" }}>
                   <img src={s.icon} style={{ width: "100%", height: "100%", objectFit: "contain" }} alt="" />
                 </div>
-                <h4 style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", marginBottom: 8 }}>{s.title}</h4>
-                <p className="flow-body" style={{ fontSize: 12, color: "var(--text-light)", lineHeight: 1.75 }}>{s.body}</p>
+                <h4 style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", marginBottom: 6 }}>{s.title}</h4>
+                <p className="flow-body" style={{ fontSize: 11, color: "var(--text-light)", lineHeight: 1.7 }}>{s.body}</p>
               </div>
             </Reveal>
           ))}
@@ -1629,6 +1696,9 @@ function Footer() {
   );
 }
 
+// 会社資料が社長から提出され次第、下記をtrueに変更するだけで掲載されます
+const DOCS_READY = false;
+
 export default function App() {
   return (
     <>
@@ -1640,7 +1710,7 @@ export default function App() {
         <Concept />
         <Campaign />
         <Services />
-        <Docs />
+        {DOCS_READY && <Docs />}
         <Features />
         <Schedule />
         <Voices />
