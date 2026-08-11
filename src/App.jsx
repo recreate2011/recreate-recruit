@@ -71,7 +71,6 @@ const globalStyle = `
     .campaign-btn { padding: 12px 32px !important; font-size: 13px !important; width: auto !important; }
     .svc-grid1 { grid-template-columns: 1fr !important; gap: 12px !important; }
     .svc-grid2 { grid-template-columns: 1fr !important; max-width: 100% !important; gap: 12px !important; margin: 0 !important; }
-    .svc-card { aspect-ratio: 3/1 !important; }
     .docs-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
     .feat-item { grid-template-columns: 1fr !important; }
     .feat-item .feat-img { min-height: 200px !important; order: 0 !important; }
@@ -113,7 +112,6 @@ const globalStyle = `
     .welfare-grid { grid-template-columns: 1fr !important; }
     .flow-steps { grid-template-columns: 1fr !important; }
     .num-val { font-size: 24px !important; }
-    .svc-card { aspect-ratio: 2/1 !important; }
   }
 `;
 
@@ -526,6 +524,7 @@ const services = [
   { name: "庄内事業所", en: "訪問看護", img: "/images/homenursingcare.jpg" },
   { name: "絲 夕日丘", en: "シェアハウス", img: "/images/sharehouse1.jpg" },
   { name: "絲 熊野町", en: "シェアハウス", img: "/images/sharehouse2.jpg" },
+  { name: "絲 長興寺", en: "シェアハウス", img: "/images/sharehouse3.jpg" },
 ];
 
 function Services() {
@@ -538,7 +537,7 @@ function Services() {
             <Reveal key={s.name} delay={i * 100}><ServiceCard {...s} /></Reveal>
           ))}
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 20, maxWidth: "calc(66.66% + 10px)", margin: "0 auto" }} className="svc-grid2">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }} className="svc-grid2">
           {services.slice(3).map((s, i) => (
             <Reveal key={s.name} delay={i * 100}><ServiceCard {...s} /></Reveal>
           ))}
@@ -683,7 +682,7 @@ function Schedule() {
 const voices = [
   { name: "田中 さくら", role: "介護職 / 入社3年目", img: "/images/スタッフの声(赤).jpg", text: "未経験でも丁寧に教えてもらえました。今では資格も取得して、自分の成長を実感しています。" },
   { name: "鈴木 健太", role: "訪問看護師 / 入社5年目", img: "/images/スタッフの声(青).jpg", text: "チームの雰囲気がとても良く、困ったときは必ず誰かが助けてくれます。働きやすい職場です。" },
-  { name: "山本 あかね", role: "看護師 / 主任", img: "/images/interview-nurce.jpg", text: "育児との両立を心配していましたが、シフトの融通が利いて助かっています。" },
+  { name: "Kさん", role: "訪問看護師 / 主任", img: "/images/interview-nurce.jpg", text: "「いつも楽しみにしていたよ」ご利用者さまからいただいたこの言葉が、今も忘れられません。" },
 ];
 
 function Voices() {
@@ -899,18 +898,18 @@ const jobDetails = [
     id: "caregiver",
     title: "介護職 / ヘルパー",
     type: "正社員",
-    salSummary: "月給 279,002円〜",
+    salSummary: "月給 284,379円〜",
     accent: "#3aacff",
     tags: ["未経験・無資格歓迎", "資格取得支援あり", "直行直帰可"],
     sections: [
       {
         label: "給与",
         rows: [
-          { th: "月収合計", td: "279,002〜286,523円", emphasis: true },
+          { th: "月収合計", td: "284,379〜291,882円", emphasis: true },
           { th: "基本給", td: "178,000〜185,000円（経験年数による）" },
-          { th: "訪問手当", td: "40,000円〜" },
-          { th: "処遇改善手当", td: "45,000円" },
-          { th: "固定残業代", td: "16,002〜16,523円（10時間分）※超過別途支給" },
+          { th: "訪問手当", td: "40,000円〜（1日5件相当）" },
+          { th: "処遇改善手当", td: "50,000円" },
+          { th: "固定残業代", td: "16,379〜16,882円（10時間分）※超過別途支給" },
           { th: "その他手当", td: "車両持ち込み手当 5,000円 ／ 家族手当（配偶者 10,000円・一親等以内 5,000円）／ 交通費別途支給" },
           { th: "昇給", td: "年1回（4月）" },
           { th: "賞与", td: "年1回（3月・実績による）" },
@@ -966,24 +965,34 @@ const jobDetails = [
     id: "service-provider",
     title: "サービス提供責任者",
     type: "正社員",
-    salSummary: "月給 315,040円〜",
+    salSummary: "月給 320,759円〜",
     accent: "#3aacff",
     tags: ["未経験・無資格歓迎", "半年でキャリアアップ", "直行直帰可"],
     sections: [
       {
         label: "給与",
         rows: [
-          { th: "月収合計", td: "315,040〜323,040円", emphasis: true },
+          { th: "月収合計", td: "320,759〜328,764円", emphasis: true },
           { th: "基本給", td: "178,000〜185,000円（経験年数による）" },
-          { th: "訪問手当", td: "40,000円〜" },
-          { th: "処遇改善手当", td: "45,000円" },
-          { th: "サ責手当", td: "20,000円〜（担当利用者数により変動）" },
-          { th: "固定残業代", td: "32,040〜33,040円（20時間分）※超過別途支給" },
+          { th: "訪問手当", td: "40,000円〜（1日5件相当）" },
+          { th: "処遇改善手当", td: "50,000円" },
+          { th: "サ責手当", td: "20,000円〜（担当利用人数により変動あり）" },
+          { th: "固定残業代", td: "32,759〜33,764円（20時間分）※超過別途支給" },
           { th: "その他手当", td: "車両持ち込み手当 5,000円 ／ 家族手当（配偶者 10,000円・一親等以内 5,000円）／ 交通費別途支給" },
           { th: "昇給", td: "年1回（4月）" },
           { th: "賞与", td: "年1回（3月・実績による）" },
           { th: "試用期間", td: "6ヶ月（条件変更なし）" },
         ],
+      },
+      {
+        label: "想定年収",
+        type: "career",
+        rows: [
+          { th: "入職1年目", td: "サービス提供責任者", salary: "430万円" },
+          { th: "入職3年目", td: "主任", salary: "500万円" },
+          { th: "入職6年目", td: "所長", salary: "650万円" },
+        ],
+        note: "※想定年収は1年間在籍した際の一例。賞与額・勤務時間により前後あり。",
       },
       {
         label: "勤務時間・休日",
@@ -1074,16 +1083,16 @@ const jobDetails = [
     id: "caregiver-part",
     title: "介護職 / ヘルパー",
     type: "パート",
-    salSummary: "時給 1,470円〜2,423円",
+    salSummary: "時給 1,470円〜2,593円",
     accent: "#92cef5",
     tags: ["週1日〜OK", "希望シフト制", "正社員登用あり"],
     sections: [
       {
         label: "給与",
         rows: [
-          { th: "パートヘルパー", td: "時給 1,470〜1,800円（処遇改善・訪問手当含む）", emphasis: true },
-          { th: "登録ヘルパー（通常）", td: "身体介護 2,052円 ／ 生活援助 1,650円（45分：1,378円）／ 移動支援 1,490円" },
-          { th: "登録ヘルパー（早朝・夜間）", td: "身体介護 2,423円 ／ 生活援助 1,920円（45分：1,603円）／ 移動支援 1,720円" },
+          { th: "パートヘルパー", td: "時給 1,470〜1,880円（処遇改善・訪問手当含む）", emphasis: true },
+          { th: "登録ヘルパー（通常）", td: "身体介護 2,210円 ／ 生活援助 1,900円（45分：1,525円）／ 移動支援 1,520円" },
+          { th: "登録ヘルパー（早朝・夜間）", td: "身体介護 2,593円 ／ 生活援助 1,955円（45分：1,623円）／ 移動支援 1,730円" },
           { th: "早朝・夜間時間帯", td: "6:00〜8:00 ／ 18:00〜20:00" },
           { th: "備考", td: "介護福祉士は30円以上UP ／ 移動中も給与対象 ／ 電動自転車貸与 ／ 昇給あり" },
           { th: "試用期間", td: "3ヶ月（条件変更なし）" },
@@ -1127,7 +1136,69 @@ const jobDetails = [
         label: "福利厚生",
         rows: [
           { th: "社会保険", td: "社会保険完備（社内規定時間あり）" },
-          { th: "その他", td: "正社員登用制度あり ／ 資格取得支援（初任者研修・各種ガイドヘルパー・喀痰吸引）／ 引越し補助（社内規定あり）／ 出産・育児支援（利用実績あり）／ バイク通勤可 ／ 私服勤務可 ／ 屋内禁煙（屋外分煙）／ マスク・アルコールボトル配布 ／ 防護服完備" },
+          { th: "その他", td: "正社員登用制度あり ／ 資格取得支援（初任者研修・各種ガイドヘルパー・喀痰吸引）／ 引越し補助（社内規定あり）／ 出産・育児支援（利用実績あり）／ バイク通勤可 ／ 私服勤務可 ／ 副業OK ／ 屋内禁煙（屋外分煙）／ マスク・アルコールボトル配布 ／ 防護服完備" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "care-manager",
+    title: "ケアマネジャー",
+    type: "正社員",
+    salSummary: "月給 317,943円〜",
+    accent: "#f2a65a",
+    tags: ["居宅ケアプラン作成", "残業月20時間以内", "土日祝休み"],
+    sections: [
+      {
+        label: "給与",
+        rows: [
+          { th: "月収合計", td: "317,943〜325,948円", emphasis: true },
+          { th: "基本給", td: "178,000〜185,000円（経験年数による）" },
+          { th: "職務手当", td: "50,000円" },
+          { th: "処遇改善手当", td: "50,000円" },
+          { th: "固定残業代", td: "39,943〜40,948円（20時間分）※超過別途支給" },
+          { th: "担当数手当", td: "インセンティブ制／担当31人目以降、1名につき3,000円" },
+          { th: "その他手当", td: "車両持ち込み手当 5,000円 ／ 家族手当（配偶者 10,000円・一親等以内 5,000円）／ 交通費別途支給" },
+          { th: "昇給", td: "年1回（4月）" },
+          { th: "賞与", td: "年1回（3月・実績による）" },
+          { th: "試用期間", td: "6ヶ月（条件変更なし）" },
+        ],
+      },
+      {
+        label: "想定年収",
+        type: "career",
+        rows: [
+          { th: "入職1年目", td: "新入職ケアマネジャー／未経験", salary: "420万円" },
+          { th: "入職5年目", td: "主任ケアマネジャー", salary: "500万円" },
+        ],
+        note: "※想定年収は1年間在籍した際の一例。賞与額・勤務時間により前後あり。",
+      },
+      {
+        label: "勤務時間・休日",
+        rows: [
+          { th: "勤務時間", td: "9:00〜18:00（実働8時間・休憩60分）" },
+          { th: "休日", td: "完全週休2日制（土日祝）／ 年間休日128日" },
+          { th: "休暇", td: "夏季休暇（8/13〜15）／ 年末年始休暇（12/30〜1/3）／ 有給休暇（取得率90%以上）／ 産休・育休（取得実績あり）／ 慶弔休暇 ／ 特別休暇（毎月1日）" },
+        ],
+      },
+      {
+        label: "仕事内容",
+        rows: [
+          { th: "業務内容", td: "居宅介護支援専門員業務全般 ／ ケアプラン作成 ／ 介護相談 ／ 要介護認定の書類作成代行 ／ 介護保険の給付請求 ／ 新規利用者獲得" },
+          { th: "備考", td: "更新費用・主任ケアマネ受講費用は全額会社負担" },
+        ],
+      },
+      {
+        label: "応募資格",
+        rows: [
+          { th: "必須", td: "介護支援専門員（ケアマネジャー）資格" },
+        ],
+      },
+      {
+        label: "福利厚生",
+        rows: [
+          { th: "社会保険", td: "雇用・労災・健康・厚生年金" },
+          { th: "その他", td: "退職金制度 ／ 資格更新費用・主任ケアマネ受講費用 会社負担 ／ バイク通勤可 ／ 服装自由 ／ 出産・育児支援（利用実績あり）／ 屋内禁煙（屋外分煙）" },
         ],
       },
     ],
