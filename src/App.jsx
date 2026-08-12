@@ -694,11 +694,9 @@ function Schedule() {
 }
 
 const voices = [
-  { name: "田中 さくら", office: "◯◯事業所", role: "介護職 / 入社3年目", img: "/images/スタッフの声(赤).jpg" },
-  { name: "鈴木 健太", office: "◯◯事業所", role: "訪問看護師 / 入社5年目", img: "/images/スタッフの声(青).jpg" },
   {
-    name: "Kさん",
-    office: "◯◯事業所",
+    name: "山中 さつき",
+    office: "庄内事業所",
     role: "訪問看護師 / 主任",
     img: "/images/interview-nurce.jpg",
     interview: {
@@ -713,6 +711,8 @@ const voices = [
       ],
     },
   },
+  { name: "田中 さくら", office: "十三事業所", role: "介護職 / 入社3年目", img: "/images/スタッフの声(赤).jpg" },
+  { name: "鈴木 健太", office: "豊中事業所", role: "訪問看護師 / 入社5年目", img: "/images/スタッフの声(青).jpg" },
 ];
 
 function Voices() {
@@ -834,7 +834,7 @@ function VoiceCard({ voice: v, onOpen }) {
         <img src={v.img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={v.name} />
       </div>
       <div style={{ padding: 16 }}>
-        <span style={{ display: "inline-block", background: "var(--blue-pale)", color: "var(--blue-dark)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, marginBottom: 8 }}>{v.office}</span>
+        <span style={{ display: "inline-block", background: "var(--white)", color: "var(--text-muted)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, border: "1px solid var(--border)", marginBottom: 8 }}>{v.office}</span>
         <p style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 4 }}>{v.role}</p>
         <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 16, fontWeight: 700, color: "var(--text)" }}>{v.name}</p>
         {v.interview && <p style={{ fontSize: 11, color: "var(--blue)", fontWeight: 700, marginTop: 10 }}>全文を読む →</p>}
@@ -1508,6 +1508,7 @@ function JobModal({ job, onClose }) {
 function JobCard({ job, onOpen }) {
   const salSection = job.sections.find(s => s.label === "給与");
   const isPartTime = job.id === "caregiver-part";
+  const totalRow = !isPartTime && salSection ? salSection.rows.find(r => r.emphasis) : null;
   const previewRows = isPartTime
     ? [
         { th: "登録ヘルパー", td: "身体介護　2,052円" },
@@ -1515,7 +1516,7 @@ function JobCard({ job, onOpen }) {
         { th: "", td: "移動支援　1,490円" },
       ]
     : salSection
-      ? salSection.rows.filter(r => !r.emphasis).slice(0, 3)
+      ? salSection.rows.filter(r => !r.emphasis).slice(0, 5)
       : [];
 
   return (
@@ -1525,22 +1526,30 @@ function JobCard({ job, onOpen }) {
         border: "1px solid var(--border)", borderRadius: 12,
         cursor: "pointer", transition: "border-color 0.2s, transform 0.2s",
         background: "var(--white)", display: "flex", flexDirection: "column",
-        height: 320, overflow: "hidden",
+        height: 390, overflow: "hidden",
       }}
       onMouseEnter={e => { e.currentTarget.style.borderColor = job.accent; e.currentTarget.style.transform = "translateY(-3px)"; }}
       onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.transform = "translateY(0)"; }}
     >
       <div style={{ background: job.accent, padding: "16px 18px 14px", flexShrink: 0 }}>
         <span style={{ display: "inline-block", border: "1px solid rgba(255,255,255,0.45)", color: "#fff", fontSize: 9, padding: "2px 8px", borderRadius: 3, marginBottom: 6, letterSpacing: "0.06em" }}>{job.type}</span>
-        <h3 style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 16, fontWeight: 700, color: "#fff", margin: "0 0 3px", lineHeight: 1.3 }}>{job.title}</h3>
-        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.9)", margin: 0 }}>{job.salSummary}</p>
+        <h3 style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 16, fontWeight: 700, color: "#fff", margin: "0 0 4px", lineHeight: 1.3 }}>{job.title}</h3>
+        <p style={{ fontSize: 17, fontWeight: 800, color: "#fff", margin: 0, letterSpacing: "0.02em" }}>{job.salSummary}</p>
       </div>
       <div style={{ padding: "8px 14px", display: "flex", flexWrap: "wrap", gap: 3, flexShrink: 0 }}>
         {job.tags.map(t => (
           <span key={t} style={{ fontSize: 9, padding: "2px 7px", borderRadius: 20, background: "#e8f6ff", color: job.accent, border: `1px solid ${job.accent}33` }}>{t}</span>
         ))}
       </div>
-      <div style={{ padding: "10px 14px 0", borderTop: "1px solid var(--border)", flexShrink: 0 }}>
+      {totalRow && (
+        <div style={{ padding: "0 14px", flexShrink: 0 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", background: `${job.accent}18`, borderRadius: 6, padding: "6px 10px" }}>
+            <span style={{ fontSize: 10, fontWeight: 700, color: job.accent }}>{totalRow.th}</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: "var(--text)" }}>{totalRow.td}</span>
+          </div>
+        </div>
+      )}
+      <div style={{ padding: "10px 14px 0", borderTop: "1px solid var(--border)", marginTop: 10, flexShrink: 0 }}>
         <p style={{ fontSize: 9, fontWeight: 700, color: job.accent, letterSpacing: "0.06em", marginBottom: 5, textAlign: "left" }}>給与</p>
         {previewRows.map((row, i) => (
           <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
@@ -1678,7 +1687,7 @@ function Contact() {
             { ico: "TEL", val: "お電話での応募", sub: "平日 9:00〜17:30", href: "tel:0648625438", bg: "#f0d878", border: "1.5px solid #c9b050" },
           ].map((c, i) => (
             <Reveal key={c.ico} delay={i * 100}>
-              <a href={c.href} style={{ padding: "36px 28px", textAlign: "center", borderRadius: 10, textDecoration: "none", display: "block", background: c.bg, border: c.border }}>
+              <a href={c.href} style={{ padding: "36px 28px", textAlign: "center", borderRadius: 10, textDecoration: "none", display: "block", width: "90%", margin: "0 auto", boxSizing: "border-box", background: c.bg, border: c.border }}>
                 <span style={{ fontSize: 13, fontWeight: 700, color: "#fff", letterSpacing: "0.1em", marginBottom: 14, display: "block", textShadow: "0 1px 4px rgba(0,0,0,0.28)" }}>{c.ico}</span>
                 <p style={{ fontSize: 15, fontWeight: 700, color: "#fff", textShadow: "0 1px 4px rgba(0,0,0,0.28)" }}>{c.val}</p>
                 {c.sub && <p style={{ fontSize: 12, color: "#fff", opacity: 0.9, marginTop: 4, textShadow: "0 1px 3px rgba(0,0,0,0.22)" }}>{c.sub}</p>}
