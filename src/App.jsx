@@ -643,7 +643,7 @@ function FeatureBody({ f }) {
     return (
       <>
         {before}
-        <span style={{ color: "var(--accent-dark)" }}>{f.highlight}</span>
+        <span style={{ fontWeight: 800, color: "var(--text)", background: "linear-gradient(to top, rgba(255,218,42,0.6) 40%, transparent 40%)", padding: "0 2px" }}>{f.highlight}</span>
         {after}
       </>
     );
@@ -694,13 +694,13 @@ function Schedule() {
 }
 
 const voices = [
-  { name: "田中 さくら", role: "介護職 / 入社3年目", img: "/images/スタッフの声(赤).jpg", text: "未経験でも丁寧に教えてもらえました。今では資格も取得して、自分の成長を実感しています。" },
-  { name: "鈴木 健太", role: "訪問看護師 / 入社5年目", img: "/images/スタッフの声(青).jpg", text: "チームの雰囲気がとても良く、困ったときは必ず誰かが助けてくれます。働きやすい職場です。" },
+  { name: "田中 さくら", office: "◯◯事業所", role: "介護職 / 入社3年目", img: "/images/スタッフの声(赤).jpg" },
+  { name: "鈴木 健太", office: "◯◯事業所", role: "訪問看護師 / 入社5年目", img: "/images/スタッフの声(青).jpg" },
   {
     name: "Kさん",
+    office: "◯◯事業所",
     role: "訪問看護師 / 主任",
     img: "/images/interview-nurce.jpg",
-    text: "「いつも楽しみにしていたよ」ご利用者さまからいただいたこの言葉が、今も忘れられません。",
     interview: {
       profile: "経験年数15年目 ／ 入職6年目 ／ 職種：看護師",
       qa: [
@@ -717,33 +717,129 @@ const voices = [
 
 function Voices() {
   const [activeVoice, setActiveVoice] = useState(null);
+  const [current, setCurrent] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [slideWidth, setSlideWidth] = useState(0);
+  const slideRef = useRef(null);
+  const startX = useRef(0);
+  const isDragging = useRef(false);
+  const total = voices.length;
+  const GAP = 20;
+  const cloneCount = 2;
+  const cloned = [...voices.slice(-cloneCount), ...voices, ...voices.slice(0, cloneCount)];
+  const offset = cloneCount;
+
+  useEffect(() => {
+    const measure = () => {
+      if (slideRef.current) setSlideWidth(slideRef.current.offsetWidth + GAP);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (slideRef.current) ro.observe(slideRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  const goTo = (index) => { setIsTransitioning(true); setCurrent(index); };
+  const prev = () => goTo(current - 1);
+  const next = () => goTo(current + 1);
+
+  useEffect(() => {
+    if (!isTransitioning) return;
+    const timer = setTimeout(() => {
+      if (current < 0) { setIsTransitioning(false); setCurrent(total - 1); }
+      else if (current >= total) { setIsTransitioning(false); setCurrent(0); }
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [current, isTransitioning, total]);
+
+  const onPointerDown = (e) => {
+    startX.current = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+    isDragging.current = true;
+  };
+  const onPointerUp = (e) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    const endX = e.type === "touchend" ? e.changedTouches[0].clientX : e.clientX;
+    const diff = startX.current - endX;
+    if (Math.abs(diff) > 40) diff > 0 ? next() : prev();
+  };
+
+  const translateIndex = current + offset;
+  const activeDot = ((current % total) + total) % total;
+
   return (
     <section id="voices" style={{ background: "var(--warm)", padding: "144px 0" }}>
+      <style>{`
+        .voices-carousel-outer { overflow: hidden; padding: 8px 0 16px; cursor: grab; user-select: none; }
+        .voices-carousel-outer:active { cursor: grabbing; }
+        .voices-carousel-track { display: flex; will-change: transform; }
+        .voices-carousel-track.animated { transition: transform 0.4s cubic-bezier(.22,.68,0,1.1); }
+        .voices-carousel-slide { flex: 0 0 calc(28% - 14px); margin-right: 20px; }
+        @media (max-width: 900px) { .voices-carousel-slide { flex: 0 0 calc(45% - 10px); } }
+        @media (max-width: 600px) { .voices-carousel-slide { flex: 0 0 75%; } }
+      `}</style>
       <div className="inner">
         <SectionHeader en="STAFF VOICES" title="先輩の声" titleClass="voices-title" />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 28 }} className="voices-grid">
-          {voices.map((v, i) => (
-            <Reveal key={v.name} delay={i * 120}>
-              <div
-                onClick={v.interview ? () => setActiveVoice(v) : undefined}
-                style={{ borderRadius: 10, overflow: "hidden", border: "1px solid var(--border)", background: "var(--white)", maxWidth: 220, margin: "0 auto", cursor: v.interview ? "pointer" : "default" }}
-              >
-                <div style={{ aspectRatio: "4/3", overflow: "hidden" }}>
-                  <img src={v.img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={v.name} />
-                </div>
-                <div style={{ padding: 16 }}>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", marginBottom: 2, textAlign: "center" }}>{v.name}</p>
-                  <p style={{ fontSize: 10, color: "var(--text-muted)", marginBottom: 10, textAlign: "center" }}>{v.role}</p>
-                  <p style={{ fontSize: 12, color: "var(--text-light)", lineHeight: 1.8 }}>{v.text}</p>
-                  {v.interview && <p style={{ fontSize: 11, color: "var(--blue)", fontWeight: 700, textAlign: "center", marginTop: 10 }}>全文を読む →</p>}
-                </div>
+        <div
+          className="voices-carousel-outer"
+          onMouseDown={onPointerDown}
+          onMouseUp={onPointerUp}
+          onMouseLeave={() => { isDragging.current = false; }}
+          onTouchStart={onPointerDown}
+          onTouchEnd={onPointerUp}
+        >
+          <div
+            className={`voices-carousel-track${isTransitioning ? " animated" : ""}`}
+            style={{ transform: slideWidth ? `translateX(${-translateIndex * slideWidth}px)` : "none" }}
+          >
+            {cloned.map((v, i) => (
+              <div key={i} className="voices-carousel-slide" ref={i === 0 ? slideRef : null}>
+                <VoiceCard voice={v} onOpen={setActiveVoice} />
               </div>
-            </Reveal>
-          ))}
+            ))}
+          </div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 20 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            {voices.map((_, i) => (
+              <div key={i} onClick={() => goTo(i)} style={{ width: i === activeDot ? 20 : 6, height: 6, borderRadius: 3, cursor: "pointer", background: i === activeDot ? "#888888" : "#d8d8d8", transition: "all 0.3s" }} />
+            ))}
+          </div>
+          <div style={{ display: "flex", gap: 4 }}>
+            <button onClick={prev} aria-label="前へ" style={{ background: "none", border: "none", cursor: "pointer", padding: 6, display: "flex", alignItems: "center", justifyContent: "center", color: "#888888" }}
+              onMouseEnter={e => e.currentTarget.style.color = "#444441"}
+              onMouseLeave={e => e.currentTarget.style.color = "#888888"}>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="13,4 7,10 13,16"/></svg>
+            </button>
+            <button onClick={next} aria-label="次へ" style={{ background: "none", border: "none", cursor: "pointer", padding: 6, display: "flex", alignItems: "center", justifyContent: "center", color: "#888888" }}
+              onMouseEnter={e => e.currentTarget.style.color = "#444441"}
+              onMouseLeave={e => e.currentTarget.style.color = "#888888"}>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="7,4 13,10 7,16"/></svg>
+            </button>
+          </div>
         </div>
       </div>
       {activeVoice && <VoiceModal voice={activeVoice} onClose={() => setActiveVoice(null)} />}
     </section>
+  );
+}
+
+function VoiceCard({ voice: v, onOpen }) {
+  return (
+    <div
+      onClick={v.interview ? () => onOpen(v) : undefined}
+      style={{ borderRadius: 10, overflow: "hidden", border: "1px solid var(--border)", background: "var(--white)", cursor: v.interview ? "pointer" : "default", height: "100%" }}
+    >
+      <div style={{ aspectRatio: "4/3", overflow: "hidden" }}>
+        <img src={v.img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={v.name} />
+      </div>
+      <div style={{ padding: 16 }}>
+        <span style={{ display: "inline-block", background: "var(--blue-pale)", color: "var(--blue-dark)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, marginBottom: 8 }}>{v.office}</span>
+        <p style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 4 }}>{v.role}</p>
+        <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 16, fontWeight: 700, color: "var(--text)" }}>{v.name}</p>
+        {v.interview && <p style={{ fontSize: 11, color: "var(--blue)", fontWeight: 700, marginTop: 10 }}>全文を読む →</p>}
+      </div>
+    </div>
   );
 }
 
