@@ -775,10 +775,10 @@ function VoiceModal({ voice, onClose }) {
 const welfare = [
   { badge: "最大20万円", title: "引越し補助", img: "/images/引越し.jpg" },
   { badge: "費用全額負担", title: "資格取得支援", img: "/images/資格.jpg" },
-  { badge: "無料貸与", title: "制服・電動自転車貸与", img: "/images/電動自転車.jpg" },
-  { title: "バイク通勤可", img: "/images/バイク通勤可.jpg" },
-  { title: "リファラル制度", img: "/images/リファラル制度.jpg" },
-  { title: "出産育児支援", img: "/images/出産育児支援.jpg" },
+  { badge: "無料貸与", title: "制服・電動自転車", img: "/images/電動自転車.jpg" },
+  { badge: "全員対象", title: "バイク通勤可", img: "/images/バイク通勤可.jpg" },
+  { badge: "最大10万円", title: "リファラル制度", img: "/images/リファラル制度.jpg" },
+  { badge: "取得実績あり", title: "出産育児支援", img: "/images/出産育児支援.jpg" },
 ];
 
 function Welfare() {
@@ -794,9 +794,10 @@ function Welfare() {
                   <div style={{ width: "100%", height: "100%", overflow: "hidden" }}>
                     <img src={w.img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={w.title} />
                   </div>
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(83,70,89,0.72) 0%,rgba(83,70,89,0.08) 60%,transparent 100%)", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: 16 }}>
-                    {w.badge && <span style={{ display: "inline-block", background: "var(--accent)", color: "var(--text)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, marginBottom: 6, alignSelf: "flex-start" }}>{w.badge}</span>}
-                    <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 15, fontWeight: 700, color: "var(--white)", lineHeight: 1.4 }}>{w.title}</p>
+                  <div style={{ position: "absolute", inset: 0, background: "rgba(255,255,255,0.38)" }} />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(83,70,89,0.78) 0%,rgba(83,70,89,0.25) 55%,rgba(83,70,89,0.02) 100%)", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: 16 }}>
+                    <span style={{ display: "inline-block", background: "var(--accent)", color: "var(--text)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, marginBottom: 6, alignSelf: "flex-start" }}>{w.badge}</span>
+                    <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 15, fontWeight: 700, color: "var(--white)", lineHeight: 1.4, whiteSpace: "nowrap" }}>{w.title}</p>
                   </div>
                 </div>
               </div>
