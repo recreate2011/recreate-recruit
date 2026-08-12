@@ -76,6 +76,7 @@ const globalStyle = `
     .svc-overlay { height: 34% !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; padding: 0 14px !important; background: rgba(255,255,255,0.85) !important; }
     .svc-name { font-size: 14px !important; }
     .svc-en { font-size: 11px !important; }
+    .svc-en-lg { font-size: 13px !important; }
     .docs-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
     .feat-item { grid-template-columns: 1fr !important; }
     .feat-item .feat-img { min-height: 200px !important; order: 0 !important; }
@@ -552,7 +553,7 @@ function ServiceCard({ name, en, img }) {
       <img src={img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={name} />
       <div className="svc-overlay" style={{ position: "absolute", bottom: 0, left: 0, width: "100%", padding: "18px 20px", background: "rgba(255,255,255,0.8)", textAlign: "center", boxSizing: "border-box" }}>
         <div className="svc-name" style={{ fontSize: 15, fontWeight: 700, color: "var(--text)" }}>{name}</div>
-        <span className="svc-en" style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 400, letterSpacing: "0.1em", display: "block", marginTop: 3 }}>{en}</span>
+        <span className={`svc-en${en !== "シェアハウス" ? " svc-en-lg" : ""}`} style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 400, letterSpacing: "0.1em", display: "block", marginTop: 3 }}>{en}</span>
       </div>
     </div>
   );
@@ -580,9 +581,9 @@ function Docs() {
 }
 
 const features = [
-  { en: "WORK STYLE", title: "ライフスタイルが変化しても\n働き続けられる", img: "/images/lifestyle.jpg", imgSp: "/images/lifestyle_sp.jpg", body: "家族との時間や自分らしく過ごす時間。人生の節目や暮らしの変化も大切にしながら働き続けられるよう、仕事と暮らしの両方を大切にできる環境づくりに取り組んでいます。有給取得率は80％以上。人生の大切な節目にも無理なく向き合えるよう、希望休にも柔軟に対応しています。働く人が安心して毎日を過ごせること。それが、より良い介護につながると私たちは考えています。" },
-  { en: "SUPPORT", title: "ひとりで抱え込まないサポート体制", img: "/images/support.jpg", imgSp: "/images/support_sp.jpg", body: "入職後の最初の訪問や、利用者さまの引き継ぎが必要な場面では同行訪問を行い、現場の流れや利用者さまの状況、サービス内容を先輩スタッフと一緒に確認できます。また、訪問先でアクシデントやイレギュラーな出来事が起きたときには、LINEでその場からすぐに状況を共有。事務所にいる所長やサービス提供責任者と連携しながら、チームとして対応を考えられる仕組みを整えています。" },
-  { en: "CAREER", title: "未来が見えるキャリアデザイン", img: "/images/career.jpg", imgSp: "/images/career_sp.jpg", body: "5年後、自分はどこを目指すのか。理想像を漠然と思い描くだけでなく、現実に近づけていけるように。リクリエイトでは、納得感を持って働き続けられる評価とキャリアの仕組みを大切にしています。感覚で評価するのではなく、日々の行動を具体的に落とし込んだ評価シートを整備。さらに、社内での役割やキャリアのフェーズを給与に反映した給与テーブルによって、自分の現在地と目指す先が見えるようにしています。" },
+  { en: "WORK STYLE", title: "ライフスタイルが変化しても\n働き続けられる", highlight: "ライフスタイル", img: "/images/lifestyle.jpg", imgSp: "/images/lifestyle_sp.jpg", body: "家族との時間や自分らしく過ごす時間。人生の節目や暮らしの変化も大切にしながら働き続けられるよう、仕事と暮らしの両方を大切にできる環境づくりに取り組んでいます。有給取得率は80％以上。人生の大切な節目にも無理なく向き合えるよう、希望休にも柔軟に対応しています。働く人が安心して毎日を過ごせること。それが、より良い介護につながると私たちは考えています。" },
+  { en: "SUPPORT", title: "ひとりで抱え込まないサポート体制", highlight: "サポート体制", img: "/images/support.jpg", imgSp: "/images/support_sp.jpg", body: "入職後の最初の訪問や、利用者さまの引き継ぎが必要な場面では同行訪問を行い、現場の流れや利用者さまの状況、サービス内容を先輩スタッフと一緒に確認できます。また、訪問先でアクシデントやイレギュラーな出来事が起きたときには、LINEでその場からすぐに状況を共有。事務所にいる所長やサービス提供責任者と連携しながら、チームとして対応を考えられる仕組みを整えています。" },
+  { en: "CAREER", title: "未来が見えるキャリアデザイン", highlight: "キャリアデザイン", img: "/images/career.jpg", imgSp: "/images/career_sp.jpg", body: "5年後、自分はどこを目指すのか。理想像を漠然と思い描くだけでなく、現実に近づけていけるように。リクリエイトでは、納得感を持って働き続けられる評価とキャリアの仕組みを大切にしています。感覚で評価するのではなく、日々の行動を具体的に落とし込んだ評価シートを整備。さらに、社内での役割やキャリアのフェーズを給与に反映した給与テーブルによって、自分の現在地と目指す先が見えるようにしています。" },
 ];
 
 function Features() {
@@ -633,10 +634,24 @@ function Features() {
 }
 
 function FeatureBody({ f }) {
+  const renderTitle = () => {
+    if (!f.highlight) return f.title;
+    const idx = f.title.indexOf(f.highlight);
+    if (idx === -1) return f.title;
+    const before = f.title.slice(0, idx);
+    const after = f.title.slice(idx + f.highlight.length);
+    return (
+      <>
+        {before}
+        <span style={{ color: "var(--accent-dark)" }}>{f.highlight}</span>
+        {after}
+      </>
+    );
+  };
   return (
     <div style={{ padding: "48px 52px", display: "flex", flexDirection: "column", justifyContent: "center", background: "var(--white)" }} className="feat-body">
       <span style={{ fontSize: 10, letterSpacing: "0.22em", color: "var(--blue)", fontWeight: 500, textTransform: "uppercase", marginBottom: 8, display: "block" }}>{f.en}</span>
-      <h3 className="feat-title" style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 22, fontWeight: 600, color: "var(--text)", marginBottom: 16, lineHeight: 1.55, textAlign: "left" }}>{f.title}</h3>
+      <h3 className="feat-title" style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 22, fontWeight: 600, color: "var(--text)", marginBottom: 16, lineHeight: 1.55, textAlign: "left" }}>{renderTitle()}</h3>
       <p style={{ fontSize: 14, color: "var(--text-light)", lineHeight: 2.1, textAlign: "left" }}>{f.body}</p>
     </div>
   );
