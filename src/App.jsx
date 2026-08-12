@@ -835,10 +835,10 @@ function VoiceCard({ voice: v, onOpen }) {
         <img src={v.img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={v.name} />
       </div>
       <div style={{ padding: "12px 2px 0" }}>
-        <span style={{ display: "inline-block", background: "var(--white)", color: "var(--text-muted)", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 3, border: "1px solid var(--border)", marginBottom: 6 }}>{v.office}</span>
+        <span style={{ display: "inline-block", background: "var(--white)", color: "var(--text-muted)", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 3, border: "1px solid var(--border)", marginBottom: 6, textAlign: "left" }}>{v.office}</span>
         <p style={{ fontSize: 13, color: "var(--text-muted)", marginBottom: 3, lineHeight: 1.3, textAlign: "left" }}>{v.role}</p>
         <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 19, fontWeight: 700, color: "var(--text)", textAlign: "left" }}>{v.name}</p>
-        {v.interview && <p style={{ fontSize: 11, color: "var(--blue)", fontWeight: 700, marginTop: 6, textAlign: "left" }}>全文を読む →</p>}
+        {v.interview && <p style={{ fontSize: 11, color: "var(--accent-dark)", fontWeight: 700, marginTop: 6, textAlign: "left" }}>全文を読む →</p>}
       </div>
     </div>
   );
