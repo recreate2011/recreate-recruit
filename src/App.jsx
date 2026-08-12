@@ -476,8 +476,8 @@ function Concept() {
           <Reveal direction="right" style={{ maxWidth: 420 }}>
             <span style={{ fontSize: 10, letterSpacing: "0.22em", color: "var(--blue)", fontWeight: 500, textTransform: "uppercase", marginBottom: 18, display: "block" }}>CONCEPT</span>
             <h2 style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 34, fontWeight: 700, lineHeight: 1.55, color: "var(--text)", marginBottom: 32, textAlign: "left" }}>
-              <em style={{ fontStyle: "normal", fontWeight: 800, color: "var(--text)", background: "linear-gradient(to top, rgba(255,218,42,0.6) 40%, transparent 40%)", padding: "0 2px" }}>想い</em><span style={{ color: "#6b7280" }}>を</span><br />
-              <span style={{ color: "#6b7280" }}>誰かを支える力に</span>
+              <em style={{ fontStyle: "normal", fontWeight: 700, color: "var(--text)" }}>想い</em><span style={{ color: "#6b7280" }}>を</span><br />
+              <span style={{ fontWeight: 800, color: "var(--text)", background: "linear-gradient(to top, rgba(255,218,42,0.6) 40%, transparent 40%)", padding: "0 2px" }}>誰かを支える力に</span>
             </h2>
             <p style={{ fontSize: 18, color: "var(--text-light)", lineHeight: 2.3, textAlign: "left" }}>
               働く人が安心していられること。それが利用者さんやご家族の安心につながり、地域全体の暮らしを支える力になる。私たちはそう信じています。「誰かの力になりたい」。その想いを、ずっと持ち続けられる環境を。あなたの力が、だれかの人生に灯りをともす。そんな仕事がここにあります。
@@ -829,15 +829,15 @@ function VoiceCard({ voice: v, onOpen }) {
   return (
     <div
       onClick={v.interview ? () => onOpen(v) : undefined}
-      style={{ borderRadius: 10, overflow: "hidden", border: "1px solid var(--border)", background: "var(--white)", cursor: v.interview ? "pointer" : "default", height: "100%" }}
+      style={{ cursor: v.interview ? "pointer" : "default", height: "100%" }}
     >
-      <div style={{ aspectRatio: "4/3", overflow: "hidden" }}>
+      <div style={{ aspectRatio: "3/4", overflow: "hidden", borderRadius: 8 }}>
         <img src={v.img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={v.name} />
       </div>
-      <div style={{ padding: 16 }}>
-        <span style={{ display: "inline-block", background: "var(--white)", color: "var(--text-muted)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, border: "1px solid var(--border)", marginBottom: 8 }}>{v.office}</span>
-        <p style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 4 }}>{v.role}</p>
-        <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 16, fontWeight: 700, color: "var(--text)" }}>{v.name}</p>
+      <div style={{ padding: "16px 2px 0" }}>
+        <span style={{ display: "inline-block", background: "var(--white)", color: "var(--text-muted)", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 3, border: "1px solid var(--border)", marginBottom: 10 }}>{v.office}</span>
+        <p style={{ fontSize: 13, color: "var(--text-muted)", marginBottom: 6, lineHeight: 1.6 }}>{v.role}</p>
+        <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 19, fontWeight: 700, color: "var(--text)" }}>{v.name}</p>
         {v.interview && <p style={{ fontSize: 11, color: "var(--blue)", fontWeight: 700, marginTop: 10 }}>全文を読む →</p>}
       </div>
     </div>
@@ -1506,6 +1506,11 @@ function JobModal({ job, onClose }) {
   );
 }
 
+function formatShortAmount(td) {
+  const m = td.match(/^([\d,]+)\s*(?:〜|円)/);
+  return m ? `${m[1]}円〜` : td;
+}
+
 function JobCard({ job, onOpen }) {
   const salSection = job.sections.find(s => s.label === "給与");
   const isPartTime = job.id === "caregiver-part";
@@ -1534,19 +1539,18 @@ function JobCard({ job, onOpen }) {
     >
       <div style={{ background: job.accent, padding: "16px 18px 14px", flexShrink: 0 }}>
         <span style={{ display: "inline-block", border: "1px solid rgba(255,255,255,0.45)", color: "#fff", fontSize: 9, padding: "2px 8px", borderRadius: 3, marginBottom: 6, letterSpacing: "0.06em" }}>{job.type}</span>
-        <h3 style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 16, fontWeight: 700, color: "#fff", margin: "0 0 4px", lineHeight: 1.3 }}>{job.title}</h3>
-        <p style={{ fontSize: 17, fontWeight: 800, color: "#fff", margin: 0, letterSpacing: "0.02em" }}>{job.salSummary}</p>
+        <h3 style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 16, fontWeight: 700, color: "#fff", margin: 0, lineHeight: 1.3 }}>{job.title}</h3>
       </div>
       <div style={{ padding: "8px 14px", display: "flex", flexWrap: "wrap", gap: 3, flexShrink: 0 }}>
         {job.tags.map(t => (
-          <span key={t} style={{ fontSize: 9, padding: "2px 7px", borderRadius: 20, background: "#e8f6ff", color: job.accent, border: `1px solid ${job.accent}33` }}>{t}</span>
+          <span key={t} style={{ fontSize: 9, padding: "2px 7px", borderRadius: 20, background: "var(--white)", color: job.accent, border: `1px solid ${job.accent}55` }}>{t}</span>
         ))}
       </div>
       {totalRow && (
         <div style={{ padding: "0 14px", flexShrink: 0 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", background: `${job.accent}18`, borderRadius: 6, padding: "6px 10px" }}>
             <span style={{ fontSize: 10, fontWeight: 700, color: job.accent }}>{totalRow.th}</span>
-            <span style={{ fontSize: 13, fontWeight: 800, color: "var(--text)" }}>{totalRow.td}</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: "var(--text)" }}>{formatShortAmount(totalRow.td)}</span>
           </div>
         </div>
       )}
