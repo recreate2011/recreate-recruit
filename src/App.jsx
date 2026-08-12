@@ -909,7 +909,7 @@ function Welfare() {
                   <div style={{ position: "absolute", inset: 0, background: "rgba(255,255,255,0.38)" }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(83,70,89,0.78) 0%,rgba(83,70,89,0.25) 55%,rgba(83,70,89,0.02) 100%)", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: 16 }}>
                     <span style={{ display: "inline-block", background: "var(--accent)", color: "var(--text)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, marginBottom: 6, alignSelf: "flex-start" }}>{w.badge}</span>
-                    <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 15, fontWeight: 700, color: "var(--white)", lineHeight: 1.4, whiteSpace: "nowrap", paddingLeft: 8 }}>{w.title}</p>
+                    <p style={{ fontFamily: "'Noto Sans JP', sans-serif", fontSize: 15, fontWeight: 700, color: "var(--white)", lineHeight: 1.4, whiteSpace: "nowrap", paddingLeft: 8 }}>{w.title}</p>
                   </div>
                 </div>
               </div>
