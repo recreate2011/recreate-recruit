@@ -50,6 +50,7 @@ const globalStyle = `
 
   @media (max-width: 768px) {
     .inner { padding: 0 20px; }
+    .section-header { margin-bottom: 40px !important; }
     .hero-img { object-fit: cover !important; }
     .hero-section { height: 100vh !important; min-height: 500px !important; }
     .hero-caption { left: 20px !important; bottom: 160px !important; right: 20px !important; text-align: left !important; }
@@ -93,7 +94,7 @@ const globalStyle = `
     .num-val { font-size: 28px !important; }
     .num-val span { font-size: 13px !important; }
     .num-label { font-size: 11px !important; }
-    .message-heading { text-align: left !important; }
+    .message-heading { text-align: left !important; font-size: 20px !important; }
     .message-body { font-size: 13px !important; text-align: left !important; }
     .requirements-title { font-size: 22px !important; white-space: nowrap !important; }
     .req-row { padding: 14px 16px !important; }
@@ -122,12 +123,12 @@ const globalStyle = `
 
 function SectionHeader({ en, title, desc, titleClass }) {
   return (
-    <div style={{ textAlign: "center", marginBottom: 80 }}>
+    <div className="section-header" style={{ textAlign: "center", marginBottom: 80 }}>
       <Reveal direction="up">
         <span style={{ fontSize: 10, letterSpacing: "0.22em", color: "var(--blue)", fontWeight: 500, textTransform: "uppercase", marginBottom: 10, display: "block" }}>{en}</span>
         <h2 className={titleClass || ""} style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 34, fontWeight: 600, lineHeight: 1.4, color: "var(--text)", marginBottom: 14 }}>{title}</h2>
         <div style={{ width: 32, height: 2, background: "var(--accent)", margin: "0 auto" }} />
-        {desc && <p style={{ fontSize: 14, color: "var(--text-light)", lineHeight: 2, marginTop: 14 }}>{desc}</p>}
+        {desc && <p style={{ fontSize: 14, color: "var(--text-light)", lineHeight: 2, marginTop: 14, whiteSpace: "pre-line" }}>{desc}</p>}
       </Reveal>
     </div>
   );
@@ -475,7 +476,7 @@ function Concept() {
           <Reveal direction="right" style={{ maxWidth: 420 }}>
             <span style={{ fontSize: 10, letterSpacing: "0.22em", color: "var(--blue)", fontWeight: 500, textTransform: "uppercase", marginBottom: 18, display: "block" }}>CONCEPT</span>
             <h2 style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 34, fontWeight: 700, lineHeight: 1.55, color: "var(--text)", marginBottom: 32, textAlign: "left" }}>
-              <em style={{ fontStyle: "normal", color: "#e6c400" }}>想い</em><span style={{ color: "#6b7280" }}>を</span><br />
+              <em style={{ fontStyle: "normal", fontWeight: 800, color: "var(--text)", background: "linear-gradient(to top, rgba(255,218,42,0.6) 40%, transparent 40%)", padding: "0 2px" }}>想い</em><span style={{ color: "#6b7280" }}>を</span><br />
               <span style={{ color: "#6b7280" }}>誰かを支える力に</span>
             </h2>
             <p style={{ fontSize: 18, color: "var(--text-light)", lineHeight: 2.3, textAlign: "left" }}>
@@ -908,7 +909,7 @@ function Welfare() {
                   <div style={{ position: "absolute", inset: 0, background: "rgba(255,255,255,0.38)" }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(83,70,89,0.78) 0%,rgba(83,70,89,0.25) 55%,rgba(83,70,89,0.02) 100%)", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: 16 }}>
                     <span style={{ display: "inline-block", background: "var(--accent)", color: "var(--text)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, marginBottom: 6, alignSelf: "flex-start" }}>{w.badge}</span>
-                    <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 15, fontWeight: 700, color: "var(--white)", lineHeight: 1.4, whiteSpace: "nowrap" }}>{w.title}</p>
+                    <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 15, fontWeight: 700, color: "var(--white)", lineHeight: 1.4, whiteSpace: "nowrap", paddingLeft: 8 }}>{w.title}</p>
                   </div>
                 </div>
               </div>
@@ -976,7 +977,7 @@ function Message() {
             <p style={{ fontSize: 12, color: "var(--text-muted)", letterSpacing: "0.08em", marginBottom: 32 }}>代表取締役 ／ 株式会社リクリエイト</p>
           </Reveal>
           <Reveal direction="up" delay={150}>
-            <h3 className="message-heading" style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 24, fontWeight: 600, color: "var(--text)", lineHeight: 1.65, marginBottom: 50 }}>介護の仕事に、誇りと未来を</h3>
+            <h3 className="message-heading" style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 30, fontWeight: 600, color: "var(--text)", lineHeight: 1.65, marginBottom: 50 }}>介護の仕事に<span style={{ fontWeight: 800, color: "var(--text)", background: "linear-gradient(to top, rgba(255,218,42,0.6) 40%, transparent 40%)", padding: "0 2px" }}>誇りと未来を</span></h3>
             <p className="message-body" style={{ fontSize: 16, color: "var(--text-light)", lineHeight: 2.2, textAlign: "left" }}>
               介護の仕事には、もっと大きな可能性がある。私たちは、そう考えています。<br /><br />
               介護は、ただ決められたサービスを提供するだけの仕事ではありません。利用者さまがこれからどんな暮らしを望んでいるのか。その人らしい生活を続けるために、私たちに何ができるのか。<br /><br />
@@ -1737,7 +1738,7 @@ function ApplyForm() {
   return (
     <section id="apply" style={{ background: "var(--white)", padding: "144px 0" }}>
       <div className="inner">
-        <SectionHeader en="APPLY" title="応募フォーム" titleClass="apply-title" desc="必要事項をご記入の上、送信してください。担当者より2営業日以内にご連絡いたします。" />
+        <SectionHeader en="APPLY" title="応募フォーム" titleClass="apply-title" desc={"必要事項をご記入の上、送信してください。\n担当者より2営業日以内にご連絡いたします。"} />
         <Reveal direction="up">
           <div className="form-inner" style={{ maxWidth: 640, margin: "0 auto", background: "var(--warm)", border: "1px solid var(--border)", borderRadius: 14, padding: "52px 56px" }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 22 }} className="form-name-row">
@@ -1792,8 +1793,7 @@ function CTA() {
     <div className="cta-inner" style={{ background: "var(--blue)", padding: "80px 48px", textAlign: "center" }}>
       <Reveal direction="up">
         <h2 className="cta-title" style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 28, fontWeight: 700, color: "var(--white)", marginBottom: 12 }}>まずはお気軽にお問合せください</h2>
-        <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", marginBottom: 32 }}>「興味はあるけど不安…」でも大丈夫。どんな疑問もお気軽にどうぞ。</p>
-        <div style={{ display: "flex", justifyContent: "center", gap: 16 }} className="cta-btns">
+        <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 32 }} className="cta-btns">
           <a href="https://lin.ee/zOsdkEG" className="cta-btn" style={{ display: "inline-block", padding: "14px 40px", background: "#06c755", color: "var(--white)", fontWeight: 700, fontSize: 14, borderRadius: 6, textDecoration: "none", letterSpacing: "0.06em" }}>LINEで相談する</a>
           <a href="tel:0648625438" className="cta-btn" style={{ display: "inline-block", padding: "14px 40px", background: "transparent", color: "var(--white)", fontWeight: 700, fontSize: 14, borderRadius: 6, textDecoration: "none", border: "2px solid rgba(255,255,255,0.6)", letterSpacing: "0.06em" }}>電話で相談する</a>
         </div>
