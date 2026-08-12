@@ -69,14 +69,20 @@ const globalStyle = `
     .campaign-body { font-size: 11px !important; }
     .campaign-note { font-size: 9px !important; }
     .campaign-btn { padding: 12px 32px !important; font-size: 13px !important; width: auto !important; }
-    .services-title, .docs-title, .why-title { font-size: 22px !important; white-space: nowrap !important; }
+    .services-title, .docs-title, .why-title, .day-title, .voices-title, .welfare-title, .message-title, .jobs-title, .contact-title, .apply-title { font-size: 22px !important; white-space: nowrap !important; }
+    .cta-title { font-size: 22px !important; }
+    .cta-inner { padding-left: 20px !important; padding-right: 20px !important; }
     .svc-grid1 { grid-template-columns: repeat(2,1fr) !important; gap: 12px !important; }
+    .svc-overlay { height: 34% !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; padding: 0 14px !important; background: linear-gradient(to top, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.75) 70%, rgba(255,255,255,0) 100%) !important; }
+    .svc-name { font-size: 14px !important; }
+    .svc-en { font-size: 11px !important; }
     .docs-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
     .feat-item { grid-template-columns: 1fr !important; }
     .feat-item .feat-img { min-height: 200px !important; order: 0 !important; }
     .feat-item .feat-body { order: 1 !important; padding: 24px 20px !important; }
     .feat-body span, .feat-body h3, .feat-body p { text-align: left !important; }
     .feat-body h3 { font-size: 17px !important; }
+    .feat-title { white-space: pre-line !important; }
     section { padding: 64px 0 !important; }
     .voices-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
     .welfare-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
@@ -109,8 +115,6 @@ const globalStyle = `
     .concept-text h2 { font-size: 22px !important; }
     .docs-grid { grid-template-columns: 1fr !important; }
     .voices-grid { grid-template-columns: 1fr !important; }
-    .welfare-grid { grid-template-columns: 1fr !important; }
-    .flow-steps { grid-template-columns: 1fr !important; }
     .num-val { font-size: 24px !important; }
   }
 `;
@@ -546,9 +550,9 @@ function ServiceCard({ name, en, img }) {
   return (
     <div className="svc-card" style={{ borderRadius: 10, overflow: "hidden", border: "1px solid var(--border)", position: "relative", aspectRatio: "1/1" }}>
       <img src={img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={name} />
-      <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", padding: "18px 20px", background: "rgba(255,255,255,0.8)", textAlign: "center", boxSizing: "border-box" }}>
-        <div style={{ fontSize: 15, fontWeight: 700, color: "var(--text)" }}>{name}</div>
-        <span style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 400, letterSpacing: "0.1em", display: "block", marginTop: 3 }}>{en}</span>
+      <div className="svc-overlay" style={{ position: "absolute", bottom: 0, left: 0, width: "100%", padding: "18px 20px", background: "rgba(255,255,255,0.8)", textAlign: "center", boxSizing: "border-box" }}>
+        <div className="svc-name" style={{ fontSize: 15, fontWeight: 700, color: "var(--text)" }}>{name}</div>
+        <span className="svc-en" style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 400, letterSpacing: "0.1em", display: "block", marginTop: 3 }}>{en}</span>
       </div>
     </div>
   );
@@ -576,7 +580,7 @@ function Docs() {
 }
 
 const features = [
-  { en: "WORK STYLE", title: "ライフスタイルが変化しても働き続けられる", img: "/images/lifestyle.jpg", imgSp: "/images/lifestyle_sp.jpg", body: "家族との時間や自分らしく過ごす時間。人生の節目や暮らしの変化も大切にしながら働き続けられるよう、仕事と暮らしの両方を大切にできる環境づくりに取り組んでいます。有給取得率は80％以上。人生の大切な節目にも無理なく向き合えるよう、希望休にも柔軟に対応しています。働く人が安心して毎日を過ごせること。それが、より良い介護につながると私たちは考えています。" },
+  { en: "WORK STYLE", title: "ライフスタイルが変化しても\n働き続けられる", img: "/images/lifestyle.jpg", imgSp: "/images/lifestyle_sp.jpg", body: "家族との時間や自分らしく過ごす時間。人生の節目や暮らしの変化も大切にしながら働き続けられるよう、仕事と暮らしの両方を大切にできる環境づくりに取り組んでいます。有給取得率は80％以上。人生の大切な節目にも無理なく向き合えるよう、希望休にも柔軟に対応しています。働く人が安心して毎日を過ごせること。それが、より良い介護につながると私たちは考えています。" },
   { en: "SUPPORT", title: "ひとりで抱え込まないサポート体制", img: "/images/support.jpg", imgSp: "/images/support_sp.jpg", body: "入職後の最初の訪問や、利用者さまの引き継ぎが必要な場面では同行訪問を行い、現場の流れや利用者さまの状況、サービス内容を先輩スタッフと一緒に確認できます。また、訪問先でアクシデントやイレギュラーな出来事が起きたときには、LINEでその場からすぐに状況を共有。事務所にいる所長やサービス提供責任者と連携しながら、チームとして対応を考えられる仕組みを整えています。" },
   { en: "CAREER", title: "未来が見えるキャリアデザイン", img: "/images/career.jpg", imgSp: "/images/career_sp.jpg", body: "5年後、自分はどこを目指すのか。理想像を漠然と思い描くだけでなく、現実に近づけていけるように。リクリエイトでは、納得感を持って働き続けられる評価とキャリアの仕組みを大切にしています。感覚で評価するのではなく、日々の行動を具体的に落とし込んだ評価シートを整備。さらに、社内での役割やキャリアのフェーズを給与に反映した給与テーブルによって、自分の現在地と目指す先が見えるようにしています。" },
 ];
@@ -632,7 +636,7 @@ function FeatureBody({ f }) {
   return (
     <div style={{ padding: "48px 52px", display: "flex", flexDirection: "column", justifyContent: "center", background: "var(--white)" }} className="feat-body">
       <span style={{ fontSize: 10, letterSpacing: "0.22em", color: "var(--blue)", fontWeight: 500, textTransform: "uppercase", marginBottom: 8, display: "block" }}>{f.en}</span>
-      <h3 style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 22, fontWeight: 600, color: "var(--text)", marginBottom: 16, lineHeight: 1.55, textAlign: "left" }}>{f.title}</h3>
+      <h3 className="feat-title" style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 22, fontWeight: 600, color: "var(--text)", marginBottom: 16, lineHeight: 1.55, textAlign: "left" }}>{f.title}</h3>
       <p style={{ fontSize: 14, color: "var(--text-light)", lineHeight: 2.1, textAlign: "left" }}>{f.body}</p>
     </div>
   );
@@ -651,7 +655,7 @@ function Schedule() {
   return (
     <section style={{ background: "var(--warm)", padding: "144px 0" }}>
       <div className="inner">
-        <SectionHeader en="A DAY IN THE LIFE" title="社員の1日" />
+        <SectionHeader en="A DAY IN THE LIFE" title="社員の1日" titleClass="day-title" />
         <Reveal direction="up">
           <div style={{ maxWidth: 640, margin: "0 auto", background: "var(--white)", border: "1px solid var(--border)", borderRadius: 12, padding: 26 }}>
             <p style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", textAlign: "center", marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid var(--border)" }}>介護職 Aさん（30代・女性）の1日</p>
@@ -701,7 +705,7 @@ function Voices() {
   return (
     <section id="voices" style={{ background: "var(--warm)", padding: "144px 0" }}>
       <div className="inner">
-        <SectionHeader en="STAFF VOICES" title="先輩の声" />
+        <SectionHeader en="STAFF VOICES" title="先輩の声" titleClass="voices-title" />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 28 }} className="voices-grid">
           {voices.map((v, i) => (
             <Reveal key={v.name} delay={i * 120}>
@@ -772,13 +776,16 @@ const welfare = [
   { badge: "最大20万円", title: "引越し補助", img: "/images/引越し.jpg" },
   { badge: "費用全額負担", title: "資格取得支援", img: "/images/資格.jpg" },
   { badge: "無料貸与", title: "制服・電動自転車貸与", img: "/images/電動自転車.jpg" },
+  { title: "バイク通勤可", img: "/images/バイク通勤可.jpg" },
+  { title: "リファラル制度", img: "/images/リファラル制度.jpg" },
+  { title: "出産育児支援", img: "/images/出産育児支援.jpg" },
 ];
 
 function Welfare() {
   return (
     <section style={{ background: "var(--white)", padding: "144px 0" }}>
       <div className="inner">
-        <SectionHeader en="WELFARE" title="福利厚生" />
+        <SectionHeader en="WELFARE" title="福利厚生" titleClass="welfare-title" />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 28 }} className="welfare-grid">
           {welfare.map((w, i) => (
             <Reveal key={w.title} delay={i * 120}>
@@ -788,7 +795,7 @@ function Welfare() {
                     <img src={w.img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={w.title} />
                   </div>
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(83,70,89,0.72) 0%,rgba(83,70,89,0.08) 60%,transparent 100%)", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: 16 }}>
-                    <span style={{ display: "inline-block", background: "var(--accent)", color: "var(--text)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, marginBottom: 6, alignSelf: "flex-start" }}>{w.badge}</span>
+                    {w.badge && <span style={{ display: "inline-block", background: "var(--accent)", color: "var(--text)", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3, marginBottom: 6, alignSelf: "flex-start" }}>{w.badge}</span>}
                     <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 15, fontWeight: 700, color: "var(--white)", lineHeight: 1.4 }}>{w.title}</p>
                   </div>
                 </div>
@@ -806,8 +813,8 @@ const numbers = [
   { val: "約70", unit: "名", label: "スタッフ数", icon: "/images/社員数.png" },
   { val: "47.2", unit: "歳", label: "平均年齢", icon: "/images/年齢.png" },
   { val: "67:33", unit: "", label: "男女比", icon: "/images/男女比.png" },
-  { val: "36", unit: "万円", label: "平均給与", icon: "" },
-  { val: "10", unit: "時間", label: "月平均労働時間", icon: "" },
+  { val: "36", unit: "万円", label: "平均給与", icon: "/images/平均給与.png" },
+  { val: "10", unit: "時間", label: "月平均残業時間", icon: "/images/月平均残業時間.png" },
 ];
 
 function Numbers() {
@@ -847,7 +854,7 @@ function Message() {
   return (
     <section style={{ background: "var(--warm)", padding: "144px 0" }}>
       <div className="inner">
-        <SectionHeader en="MESSAGE" title="一緒に働きませんか？" />
+        <SectionHeader en="MESSAGE" title="一緒に働きませんか？" titleClass="message-title" />
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <Reveal direction="up">
             <div style={{ width: 160, height: 200, borderRadius: 12, overflow: "hidden", margin: "0 auto 24px", border: "1px solid var(--border)" }}>
@@ -1502,7 +1509,7 @@ function Jobs() {
         @media (max-width: 600px) { .jobs-carousel-slide { flex: 0 0 75%; } }
       `}</style>
       <div className="inner">
-        <SectionHeader en="OPEN POSITIONS" title="募集中の職種" />
+        <SectionHeader en="OPEN POSITIONS" title="募集中の職種" titleClass="jobs-title" />
         <div
           className="jobs-carousel-outer"
           onMouseDown={onPointerDown}
@@ -1551,7 +1558,7 @@ function Contact() {
   return (
     <section style={{ background: "var(--warm)", padding: "144px 0" }}>
       <div className="inner">
-        <SectionHeader en="CONTACT" title="ご応募はコチラ" />
+        <SectionHeader en="CONTACT" title="ご応募はコチラ" titleClass="contact-title" />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }} className="contact-grid">
           {[
             { ico: "LINE", val: "LINEで問い合わせる", sub: "24時間受付中", href: "https://lin.ee/zOsdkEG", bg: "#7cc98a", border: "1.5px solid #5aaa68" },
@@ -1609,7 +1616,7 @@ function ApplyForm() {
   return (
     <section id="apply" style={{ background: "var(--white)", padding: "144px 0" }}>
       <div className="inner">
-        <SectionHeader en="APPLY" title="応募フォーム" desc="必要事項をご記入の上、送信してください。担当者より2営業日以内にご連絡いたします。" />
+        <SectionHeader en="APPLY" title="応募フォーム" titleClass="apply-title" desc="必要事項をご記入の上、送信してください。担当者より2営業日以内にご連絡いたします。" />
         <Reveal direction="up">
           <div className="form-inner" style={{ maxWidth: 640, margin: "0 auto", background: "var(--warm)", border: "1px solid var(--border)", borderRadius: 14, padding: "52px 56px" }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 22 }} className="form-name-row">
@@ -1661,9 +1668,9 @@ function ApplyForm() {
 
 function CTA() {
   return (
-    <div style={{ background: "var(--blue)", padding: "80px 48px", textAlign: "center" }}>
+    <div className="cta-inner" style={{ background: "var(--blue)", padding: "80px 48px", textAlign: "center" }}>
       <Reveal direction="up">
-        <h2 style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 28, fontWeight: 700, color: "var(--white)", marginBottom: 12 }}>まずはお気軽にお問合せください</h2>
+        <h2 className="cta-title" style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 28, fontWeight: 700, color: "var(--white)", marginBottom: 12 }}>まずはお気軽にお問合せください</h2>
         <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", marginBottom: 32 }}>「興味はあるけど不安…」でも大丈夫。どんな疑問もお気軽にどうぞ。</p>
         <div style={{ display: "flex", justifyContent: "center", gap: 16 }} className="cta-btns">
           <a href="https://lin.ee/zOsdkEG" className="cta-btn" style={{ display: "inline-block", padding: "14px 40px", background: "#06c755", color: "var(--white)", fontWeight: 700, fontSize: 14, borderRadius: 6, textDecoration: "none", letterSpacing: "0.06em" }}>LINEで相談する</a>
