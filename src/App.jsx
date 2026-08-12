@@ -73,7 +73,7 @@ const globalStyle = `
     .cta-title { font-size: 22px !important; }
     .cta-inner { padding-left: 20px !important; padding-right: 20px !important; }
     .svc-grid1 { grid-template-columns: repeat(2,1fr) !important; gap: 12px !important; }
-    .svc-overlay { height: 34% !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; padding: 0 14px !important; background: linear-gradient(to top, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.75) 70%, rgba(255,255,255,0) 100%) !important; }
+    .svc-overlay { height: 34% !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; padding: 0 14px !important; background: rgba(255,255,255,0.85) !important; }
     .svc-name { font-size: 14px !important; }
     .svc-en { font-size: 11px !important; }
     .docs-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
