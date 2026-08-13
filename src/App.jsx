@@ -700,7 +700,9 @@ const voices = [
     office: "庄内事業所",
     role: "訪問看護師 / 主任",
     img: "/images/interview-nurce.jpg",
+    slug: "yamanaka-satsuki",
     interview: {
+      title: "「あなたに来てもらえて良かった」\nその言葉を胸に訪問看護を続けています。",
       profile: "経験年数15年目 ／ 入職6年目 ／ 職種：看護師",
       qa: [
         { q: "この仕事を選んだきっかけや理由は何でしたか？", a: "私が幼い頃から父が病気を患っており、母が看護師さんに感謝してると幼い頃からよく聞いていたので、自然と看護師の仕事に興味を持つ様になりました。" },
@@ -717,7 +719,6 @@ const voices = [
 ];
 
 function Voices() {
-  const [activeVoice, setActiveVoice] = useState(null);
   const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [slideWidth, setSlideWidth] = useState(0);
@@ -795,7 +796,7 @@ function Voices() {
           >
             {cloned.map((v, i) => (
               <div key={i} className="voices-carousel-slide" ref={i === 0 ? slideRef : null}>
-                <VoiceCard voice={v} onOpen={setActiveVoice} />
+                <VoiceCard voice={v} />
               </div>
             ))}
           </div>
@@ -820,16 +821,17 @@ function Voices() {
           </div>
         </div>
       </div>
-      {activeVoice && <VoiceModal voice={activeVoice} onClose={() => setActiveVoice(null)} />}
     </section>
   );
 }
 
-function VoiceCard({ voice: v, onOpen }) {
+function VoiceCard({ voice: v }) {
+  const Wrapper = v.interview ? "a" : "div";
+  const wrapperProps = v.interview ? { href: `/interview/${v.slug}` } : {};
   return (
-    <div
-      onClick={v.interview ? () => onOpen(v) : undefined}
-      style={{ cursor: v.interview ? "pointer" : "default", height: "100%" }}
+    <Wrapper
+      {...wrapperProps}
+      style={{ cursor: v.interview ? "pointer" : "default", height: "100%", display: "block", textDecoration: "none", color: "inherit" }}
     >
       <div style={{ aspectRatio: "3/4", overflow: "hidden", borderRadius: 8 }}>
         <img src={v.img} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} alt={v.name} />
@@ -842,47 +844,87 @@ function VoiceCard({ voice: v, onOpen }) {
         <p style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 19, fontWeight: 700, color: "var(--text)", textAlign: "left" }}>{v.name}</p>
         {v.interview && <p style={{ fontSize: 11, color: "var(--accent-dark)", fontWeight: 700, marginTop: 6, textAlign: "left" }}>全文を読む →</p>}
       </div>
-    </div>
+    </Wrapper>
   );
 }
 
-function VoiceModal({ voice, onClose }) {
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
-  }, []);
-
-  useEffect(() => {
-    const handler = (e) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [onClose]);
-
+function InterviewPage({ voice }) {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
-    <div className="job-modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="job-modal" role="dialog" aria-modal="true" aria-label={voice.name}>
-        <div className="modal-drag-bar" />
-        <div style={{ background: "var(--blue)", padding: "24px 28px 20px", display: "flex", gap: 16, alignItems: "center" }}>
-          <img src={voice.img} alt={voice.name} style={{ width: 56, height: 56, borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "2px solid rgba(255,255,255,0.6)" }} />
-          <div style={{ flex: 1 }}>
-            <h2 style={{ fontFamily: "'Shippori Mincho', serif", fontSize: 19, fontWeight: 700, color: "#fff", margin: "0 0 4px" }}>{voice.name}</h2>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.85)", margin: 0 }}>{voice.role}</p>
+    <>
+      <style>{`
+        .interview-page-body { padding-top: 64px; padding-bottom: 76px; }
+        @media (min-width: 769px) { .interview-page-body { padding-top: 80px; } }
+        .interview-back-link {
+          display: inline-flex; align-items: center; gap: 6px;
+          font-size: 13px; color: var(--text-muted); text-decoration: none;
+          padding: 20px 24px 0;
+        }
+        .interview-article { max-width: 720px; margin: 0 auto; padding: 32px 24px 60px; }
+        .interview-tag-row { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .interview-tag { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 3px; background: var(--white); border: 1px solid var(--border); color: var(--text-muted); }
+        .interview-title {
+          font-family: 'Shippori Mincho', serif; font-weight: 700;
+          font-size: clamp(15px, 5.2vw - 3px, 24px);
+          line-height: 1.7; color: var(--text); margin-bottom: 12px; text-align: left;
+          white-space: pre-line;
+        }
+        .interview-role-line { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+        .interview-role-line .interview-name { color: var(--text); font-weight: 700; margin-right: 8px; }
+        .interview-hero-photo { width: 100%; aspect-ratio: 4/3; border-radius: 10px; overflow: hidden; margin-bottom: 32px; }
+        .interview-hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .interview-profile-line { font-size: 13px; color: var(--text-muted); padding-bottom: 20px; margin-bottom: 32px; border-bottom: 1px solid var(--border); text-align: left; }
+        .interview-qa-block { margin-bottom: 40px; }
+        .interview-qa-block .q {
+          font-family: 'Shippori Mincho', serif; font-size: 17px; font-weight: 700;
+          color: var(--text); line-height: 1.7; margin-bottom: 14px; text-align: left;
+          border-left: 3px solid var(--border); padding-left: 14px;
+        }
+        .interview-qa-block .q-mark { color: var(--text-muted); margin-right: 4px; }
+        .interview-qa-block .a {
+          font-size: 15px; color: var(--text-light); line-height: 2.1; text-align: left;
+          white-space: pre-line; padding-left: 17px;
+        }
+        .interview-cta { max-width: 720px; margin: 0 auto; padding: 0 24px 40px; text-align: center; }
+        .interview-cta a {
+          display: inline-block; padding: 14px 40px; border-radius: 30px;
+          background: var(--red); color: #fff; text-decoration: none; font-size: 14px; font-weight: 700;
+        }
+        .interview-fixed-footer {
+          position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+          background: var(--accent); padding: 16px 24px; text-align: center;
+        }
+        .interview-fixed-footer a { text-decoration: none; font-size: 15px; font-weight: 700; color: var(--text); }
+      `}</style>
+      <Header />
+      <div className="interview-page-body">
+        <a href="/#voices" className="interview-back-link">← 先輩の声一覧に戻る</a>
+        <div className="interview-article">
+          <div className="interview-tag-row">
+            <span className="interview-tag">{voice.office}</span>
+            <span className="interview-tag">{voice.role}</span>
           </div>
-          <button onClick={onClose} aria-label="閉じる" style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", color: "#fff", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>✕</button>
-        </div>
-        <div className="modal-section" style={{ paddingTop: 20 }}>
-          {voice.interview.profile && (
-            <p style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid var(--border)" }}>{voice.interview.profile}</p>
-          )}
+          <h1 className="interview-title">{voice.interview.title}</h1>
+          <div className="interview-role-line"><span className="interview-name">{voice.name}</span>{voice.role}・{voice.office}</div>
+          <div className="interview-hero-photo">
+            <img src={voice.img} alt={voice.name} />
+          </div>
+          {voice.interview.profile && <p className="interview-profile-line">{voice.interview.profile}</p>}
           {voice.interview.qa.map((item, i) => (
-            <div key={i} style={{ marginBottom: 24 }}>
-              <p style={{ fontSize: 13, fontWeight: 700, color: "var(--blue)", marginBottom: 8, lineHeight: 1.6 }}>Q{i + 1}. {item.q}</p>
-              <p style={{ fontSize: 13, color: "var(--text)", lineHeight: 1.9, whiteSpace: "pre-line" }}>{item.a}</p>
+            <div key={i} className="interview-qa-block">
+              <p className="q"><span className="q-mark">Q</span>{item.q}</p>
+              <p className="a">{item.a}</p>
             </div>
           ))}
         </div>
+        <div className="interview-cta">
+          <a href="/#jobs">募集要項 →</a>
+        </div>
       </div>
-    </div>
+      <footer className="interview-fixed-footer">
+        <a href="/#contact">お問い合わせはこちら</a>
+      </footer>
+    </>
   );
 }
 
@@ -1828,6 +1870,20 @@ function Footer() {
 const DOCS_READY = false;
 
 export default function App() {
+  const path = typeof window !== "undefined" ? window.location.pathname : "/";
+  const interviewMatch = path.match(/^\/interview\/([^/]+)\/?$/);
+  const interviewVoice = interviewMatch ? voices.find(v => v.slug === interviewMatch[1] && v.interview) : null;
+
+  if (interviewVoice) {
+    return (
+      <>
+        <style>{globalStyle}</style>
+        <style>{`html,body,#root{width:100%;max-width:100%;overflow-x:hidden;}`}</style>
+        <InterviewPage voice={interviewVoice} />
+      </>
+    );
+  }
+
   return (
     <>
       <style>{globalStyle}</style>
