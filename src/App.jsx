@@ -854,7 +854,7 @@ function InterviewPage({ voice }) {
   return (
     <>
       <style>{`
-        .interview-page-body { padding-top: 64px; padding-bottom: 48px; }
+        .interview-page-body { padding-top: 64px; padding-bottom: 36px; }
         @media (min-width: 769px) { .interview-page-body { padding-top: 80px; } }
         .interview-back-link {
           display: inline-flex; align-items: center; gap: 6px;
@@ -893,9 +893,9 @@ function InterviewPage({ voice }) {
         }
         .interview-fixed-footer {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-          background: var(--accent); padding: 6px 24px; text-align: center; line-height: 1;
+          background: var(--accent); padding: 3px 24px; text-align: center; line-height: 1;
         }
-        .interview-fixed-footer a { display: inline-block; text-decoration: none; font-size: 13px; font-weight: 700; color: var(--text); line-height: 1; }
+        .interview-fixed-footer a { display: inline-block; text-decoration: none; font-size: 12px; font-weight: 700; color: var(--text); line-height: 1; }
       `}</style>
       <Header alwaysWhite />
       <div className="interview-page-body">
