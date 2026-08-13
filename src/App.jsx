@@ -314,7 +314,7 @@ function Header({ alwaysWhite = false }) {
 
       {/* ── ヘッダーバー ── */}
       <header style={headerStyle}>
-        <a href="#" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+        <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
           <img
             src="/images/recreate.logo.png"
             alt="株式会社リクリエイト"
