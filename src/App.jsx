@@ -137,10 +137,10 @@ function SectionHeader({ en, title, desc, titleClass }) {
 // ============================================================
 // Header — PC: 白背景80px / SP: 透明64px + ドロワー
 // ============================================================
-function Header() {
+function Header({ alwaysWhite = false }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isTop, setIsTop] = useState(true);
+  const [isTop, setIsTop] = useState(!alwaysWhite);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 768);
@@ -155,10 +155,11 @@ function Header() {
   }, [menuOpen]);
 
   useEffect(() => {
+    if (alwaysWhite) return;
     const onScroll = () => setIsTop(window.scrollY < window.innerHeight * 0.8);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [alwaysWhite]);
 
   const navLinks = [
     { label: "コンセプト", en: "CONCEPT", href: "#concept" },
@@ -866,11 +867,11 @@ function InterviewPage({ voice }) {
         .interview-title {
           font-family: 'Shippori Mincho', serif; font-weight: 700;
           font-size: clamp(15px, 5.2vw - 3px, 24px);
-          line-height: 1.7; color: var(--text); margin-bottom: 12px; text-align: left;
+          line-height: 1.7; color: var(--text); margin-bottom: 12px; margin-left: -0.2em; text-align: left;
           white-space: pre-line;
         }
         .interview-role-line { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; text-align: left; }
-        .interview-role-line .interview-name { color: var(--text); font-weight: 700; margin-right: 8px; }
+        .interview-role-line .interview-name { color: var(--text-muted); font-weight: 700; margin-right: 8px; }
         .interview-hero-photo { width: 100%; aspect-ratio: 4/3; border-radius: 10px; overflow: hidden; margin-bottom: 32px; }
         .interview-hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .interview-profile-line { font-size: 13px; color: var(--text-muted); padding-bottom: 20px; margin-bottom: 32px; border-bottom: 1px solid var(--border); text-align: left; }
@@ -892,11 +893,11 @@ function InterviewPage({ voice }) {
         }
         .interview-fixed-footer {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-          background: var(--accent); padding: 8px 24px; text-align: center;
+          background: var(--accent); padding: 6px 24px; text-align: center; line-height: 1;
         }
-        .interview-fixed-footer a { text-decoration: none; font-size: 14px; font-weight: 700; color: var(--text); }
+        .interview-fixed-footer a { display: inline-block; text-decoration: none; font-size: 13px; font-weight: 700; color: var(--text); line-height: 1; }
       `}</style>
-      <Header />
+      <Header alwaysWhite />
       <div className="interview-page-body">
         <a href="/#voices" className="interview-back-link">← 先輩の声一覧に戻る</a>
         <div className="interview-article">
