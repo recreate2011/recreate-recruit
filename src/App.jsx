@@ -1193,7 +1193,7 @@ const jobDetails = [
     title: "介護職 / ヘルパー",
     type: "パート",
     salSummary: "時給 1,470円〜2,593円",
-    accent: "#92cef5",
+    accent: "#3aacff",
     tags: ["週1日〜OK", "希望シフト制", "正社員登用あり"],
     sections: [
       {
