@@ -893,9 +893,10 @@ function InterviewPage({ voice }) {
         }
         .interview-fixed-footer {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-          background: var(--accent); padding: 3px 24px; text-align: center; line-height: 1;
+          background: var(--accent); height: 32px;
+          display: flex; align-items: center; justify-content: center;
         }
-        .interview-fixed-footer a { display: inline-block; text-decoration: none; font-size: 12px; font-weight: 700; color: var(--text); line-height: 1; }
+        .interview-fixed-footer a { text-decoration: none; font-size: 12px; font-weight: 700; color: var(--text); }
       `}</style>
       <Header alwaysWhite />
       <div className="interview-page-body">
