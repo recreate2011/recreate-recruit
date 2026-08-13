@@ -853,7 +853,7 @@ function InterviewPage({ voice }) {
   return (
     <>
       <style>{`
-        .interview-page-body { padding-top: 64px; padding-bottom: 76px; }
+        .interview-page-body { padding-top: 64px; padding-bottom: 48px; }
         @media (min-width: 769px) { .interview-page-body { padding-top: 80px; } }
         .interview-back-link {
           display: inline-flex; align-items: center; gap: 6px;
@@ -869,7 +869,7 @@ function InterviewPage({ voice }) {
           line-height: 1.7; color: var(--text); margin-bottom: 12px; text-align: left;
           white-space: pre-line;
         }
-        .interview-role-line { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+        .interview-role-line { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; text-align: left; }
         .interview-role-line .interview-name { color: var(--text); font-weight: 700; margin-right: 8px; }
         .interview-hero-photo { width: 100%; aspect-ratio: 4/3; border-radius: 10px; overflow: hidden; margin-bottom: 32px; }
         .interview-hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -892,9 +892,9 @@ function InterviewPage({ voice }) {
         }
         .interview-fixed-footer {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-          background: var(--accent); padding: 16px 24px; text-align: center;
+          background: var(--accent); padding: 8px 24px; text-align: center;
         }
-        .interview-fixed-footer a { text-decoration: none; font-size: 15px; font-weight: 700; color: var(--text); }
+        .interview-fixed-footer a { text-decoration: none; font-size: 14px; font-weight: 700; color: var(--text); }
       `}</style>
       <Header />
       <div className="interview-page-body">
