@@ -716,7 +716,7 @@ const voices = [
     },
   },
   { name: "田中 さくら", office: "十三事業所", role: "介護職 / 入社3年目", img: "/images/スタッフの声(赤).jpg" },
-  { name: "鈴木 健太", office: "豊中事業所", role: "訪問看護師 / 入社5年目", img: "/images/スタッフの声(青).jpg" },
+  { name: "鈴木 健太", office: "豊中事業所", role: "訪問看護師 / 入社5年目", img: "/images/interview-careworker1.jpg" },
 ];
 
 function Voices() {
