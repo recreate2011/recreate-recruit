@@ -1871,6 +1871,9 @@ function Footer() {
 // 会社資料が社長から提出され次第、下記をtrueに変更するだけで掲載されます
 const DOCS_READY = false;
 
+// 入職お祝い金(10万円)キャンペーンの表示/非表示。再開する時はtrueに変更するだけでOK
+const CAMPAIGN_ENABLED = false;
+
 export default function App() {
   const path = typeof window !== "undefined" ? window.location.pathname : "/";
   const interviewMatch = path.match(/^\/interview\/([^/]+)\/?$/);
@@ -1894,7 +1897,7 @@ export default function App() {
       <main style={{ paddingTop: 0, width: "100%" }}>
         <Hero />
         <Concept />
-        <Campaign />
+        {CAMPAIGN_ENABLED && <Campaign />}
         <Services />
         {DOCS_READY && <Docs />}
         <Features />
