@@ -724,6 +724,7 @@ const voices = [
     slug: "suzuki-kenta",
     interview: {
       title: "「成長していく姿を、そばで見てきました」\n約10年続く関わりの中で、介護の仕事のやりがいを感じています。",
+      heroImg: "/images/interview-careworker2.jpg",
       profile: "入職3年目 ／ 職種：介護職",
       qa: [
         { q: "この仕事を選んだきっかけや理由は何でしたか？", a: "フリーターをしていた時に、小林社長に声をかけてもらったのがきっかけです。介護関係の仕事は未経験だったので当時は介護の仕事に対して具体的なイメージを持っていたわけではありませんでした。でも、社長の人柄や誘い方に「やってみようかな」と思わせるものがあって、飛び込んでみることにしました。" },
@@ -927,7 +928,7 @@ function InterviewPage({ voice }) {
           <h1 className="interview-title">{voice.interview.title}</h1>
           <div className="interview-role-line"><span className="interview-name">{voice.name}</span>{voice.role}・{voice.office}</div>
           <div className="interview-hero-photo">
-            <img src={voice.img} alt={voice.name} />
+            <img src={voice.interview.heroImg || voice.img} alt={voice.name} />
           </div>
           {voice.interview.profile && <p className="interview-profile-line">{voice.interview.profile}</p>}
           {voice.interview.qa.map((item, i) => (
